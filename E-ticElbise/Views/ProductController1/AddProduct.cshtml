@@ -1,0 +1,110 @@
+﻿@model List<EntityLayer.Concrate.Category>
+
+@{
+    ViewData["Title"] = "AddProduct";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 sütunlu grid */
+        gap: 20px; /* Kartlar arasındaki boşluk */
+        justify-items: center;
+        padding: 20px;
+    }
+
+    .form-card {
+        width: 300px; /* Sabit genişlik */
+        height: 100px; /* Sabit yükseklik */
+        display: flex; /* Flex kullanarak içeriği ortalayabiliriz */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card {
+        background-color: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        cursor: pointer; /* Kart tıklanabilir olacak */
+        transition: background-color 0.3s ease;
+        text-align: center; /* Kart içindeki metni ortalar */
+        width: 100%; 
+        height: 100%;
+    }
+
+        .card:hover {
+            background-color: #e0f7ff; /* Kartın üzerine gelindiğinde mavi bir arka plan ver */
+        }
+
+        .card.selected {
+            background-color: #8abf85; /* Seçildiğinde daha koyu açık yeşil arka plan */
+            color: black;
+        }
+
+    .card-content p {
+        margin: 0;
+        color: black;
+        font-weight: bold; /* Metni kalın yapar */
+        font-size: 1em; /* Metin boyutunu sabitle */
+        overflow: hidden; /* Taşmaları engelle */
+        text-overflow: ellipsis; /* Taşan metni üç nokta ile göster */
+        white-space: nowrap; /* Metnin tek satırda kalmasını sağla */
+    }
+
+    .card.selected .card-content p {
+        color: white; /* Kart seçili olduğunda yazı beyaz olacak */
+    }
+
+    h4 {
+        padding-left: 30px;
+        color: black;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+</style>
+
+<h1 class="h3 mb-0 text-gray-800">Ürün ekleme paneli</h1>
+<br />
+<br />
+<br />
+<h4>Lütfen ürün eklemek istediğiniz kategoriyi seçiniz:</h4>
+<div class="container">
+    @foreach (var item in Model)
+    {
+        <form action="/ProductController1/AddProductS2" method="get" class="form-card">
+            <input type="hidden" name="id" value="@item.CategoryId" />
+
+            <div class="card" onclick="this.closest('form').submit();" data-category="@item.CategoryName">
+                <div class="card-content">
+                    <p>@item.CategoryName</p>
+                </div>
+            </div>
+        </form>
+    }
+</div>
+
+<script>
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+        card.addEventListener('click', function () {
+            // Önce tüm kartlardan 'selected' sınıfını kaldır
+            cards.forEach(c => c.classList.remove('selected'));
+
+            // Tıklanan karta 'selected' sınıfını ekle
+            card.classList.add('selected');
+
+            // Seçilen kategori ile işlem yapabiliriz
+            const selectedCategory = card.getAttribute('data-category');
+            console.log('Seçilen Kategori:', selectedCategory);
+        });
+    });
+</script>

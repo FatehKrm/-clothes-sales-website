@@ -1,0 +1,184 @@
+﻿@model EntityLayer.Concrate.Category
+
+@{
+    ViewData["Title"] = "AddCategory";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #f0f0f0;
+    }
+
+    /* Sayfanın ortalanması */
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 500px;
+        padding: 30px;
+        margin: 20px;
+    }
+
+    .image-placeholder {
+        width: 100%;
+        height: 350px;
+        background-color: #e0e0e0;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        overflow: hidden;
+        position: relative;
+    }
+        .image-placeholder img {
+            object-fit: cover; 
+            object-position:
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            border-radius: 10px;
+        }
+
+
+
+    #imageUpload {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+        .content input[type="text"],
+        .content textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+    .switch-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 20px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 34px;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+    input:checked + .slider {
+        background-color: #4caf50;
+    }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+    .round {
+        border-radius: 34px;
+    }
+</style>  @* style css alanı  *@
+@using (Html.BeginForm("AddCategory", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="container">
+        <div class="card">
+            <span style="font-size:15px;">Kategori kapak fotoğrafı seçiniz</span>
+              <br>
+            <div class="image-placeholder">
+                <img id="previewImage" src="" alt="Seçilen resim burada görünecek" style="display:none;">
+                <input type="file" id="imageUpload" name="imageUpload" accept="image/*" />
+            </div>
+
+            <div class="content">
+                <label for="kategori-adi">Kategori Adı :</label>
+                @Html.TextBoxFor(m => m.CategoryName, new { @id = "kategori-adi", @placeholder = "Kategori adı girin" })
+                @Html.ValidationMessageFor(m => m.CategoryName, "", new { @class = "text-danger" })
+
+                <div class="switch-container">
+                    <span style="font-size:23px;">Aktiflik durumu</span>
+                    <label class="switch">
+                        <input asp-for="IsActive" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <label for="aciklama">Açıklama :</label>
+                <textarea asp-for="CategoryDiscription" id="aciklama" rows="4" placeholder="Açıklama girin"></textarea>
+            </div>
+            <br />
+
+            <button type="submit" class="btn btn-success btn-user">Kaydet</button>
+        </div>
+    </div>
+}
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<script>
+    document.getElementById("imageUpload").addEventListener("change", function (event) {
+        const image = document.getElementById("previewImage");
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                image.src = e.target.result;
+                image.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

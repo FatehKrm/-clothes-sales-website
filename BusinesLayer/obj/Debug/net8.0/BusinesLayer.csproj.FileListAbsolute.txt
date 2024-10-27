@@ -1,0 +1,17 @@
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\bin\Debug\net8.0\BusinesLayer.deps.json
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\bin\Debug\net8.0\BusinesLayer.dll
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\bin\Debug\net8.0\BusinesLayer.pdb
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\bin\Debug\net8.0\DataAccessLayer.dll
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\bin\Debug\net8.0\EntityLayer.dll
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\bin\Debug\net8.0\DataAccessLayer.pdb
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\bin\Debug\net8.0\EntityLayer.pdb
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\obj\Debug\net8.0\BusinesLayer.csproj.AssemblyReference.cache
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\obj\Debug\net8.0\BusinesLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\obj\Debug\net8.0\BusinesLayer.AssemblyInfoInputs.cache
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\obj\Debug\net8.0\BusinesLayer.AssemblyInfo.cs
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\obj\Debug\net8.0\BusinesLayer.csproj.CoreCompileInputs.cache
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\obj\Debug\net8.0\BusinesL.4531A082.Up2Date
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\obj\Debug\net8.0\BusinesLayer.dll
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\obj\Debug\net8.0\refint\BusinesLayer.dll
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\obj\Debug\net8.0\BusinesLayer.pdb
+C:\Users\emiru\Desktop\Web Geliştirme\E-ticElbise\BusinesLayer\obj\Debug\net8.0\ref\BusinesLayer.dll

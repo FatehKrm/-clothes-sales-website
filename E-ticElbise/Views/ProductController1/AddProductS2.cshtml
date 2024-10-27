@@ -1,0 +1,506 @@
+﻿@model E_ticElbise.Models.Classes.PCSViewModel
+ 
+
+@{
+    ViewData["Title"] = "AddProductS2";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<head>
+    <link href="~/startbootstrap-sb-admin-2-gh-pages/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="~/startbootstrap-sb-admin-2-gh-pages/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<style>
+    .product-card {
+        width: 900px;
+        height: auto;
+        border-radius: 15px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 0 auto;
+    }
+
+    .info-text {
+        position: relative; /* Pseudo-element için gerekli */
+        padding-left: 20px; /* Noktanın görünmesi için soldan boşluk */
+        color: black; /* Metin rengi */
+        display: flex;
+    }
+
+        .info-text::before {
+            content: '';
+            position: absolute;
+            left: 0; /* Solda yerleştir */
+            top: 50%; /* Dikey olarak ortala */
+            transform: translateY(-50%); /* Gerçekten ortalamak için */
+            width: 8px; /* Noktanın genişliği */
+            height: 8px; /* Noktanın yüksekliği */
+            background-color: #E85C0D; /* Tütün rengi */
+            border-radius: 50%; /* Yuvarlak nokta */
+        }
+
+    .image-placeholder {
+        width: 220px;
+        height: 200px;
+        margin-left: 30px;
+        background-color: #e0e0e0;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        overflow: hidden;
+        position: relative;
+    }
+
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Görüntüyü tam olarak kutuya sığdırır */
+            object-position: center; /* Görüntüyü ortalar */
+            border-radius: 10px;
+        }
+
+    #imageUpload {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+    }
+
+    .rounded-textbox {
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        padding: 5px;
+        width: 200px;
+        box-sizing: border-box;
+        margin-left: 10px;
+    }
+
+    .date-picker {
+        width: 200px;
+        margin-left: 10px;
+        border-radius: 5px;
+    }
+
+    /* Tüm inputları aynı hizaya getirmek için flex düzeni */
+    .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+        .form-group label {
+            width: 150px; /* Etiket genişliği, yazıların hizalanması için */
+            display: flex;
+        }
+
+    /* Renk paleti için yan yana düzen */
+    .color-picker-container {
+        display: flex;
+        gap: 10px; /* Renk kutuları arasındaki boşluk */
+        margin-top: 10px;
+    }
+
+    .color-option {
+        width: 20px; /* Daire boyutu */
+        height: 20px;
+        border-radius: 50%; /* Daire yapısı */
+        border: 2px solid transparent; /* Sınır */
+        display: flex;
+        margin-right: 10px; /* Sağa boşluk */
+        margin-bottom: 10px;
+    }
+
+     
+        .more-colors {
+        font-family:  'San Francisco', Helvetica, Arial, san-serif; /* Yazı tipi */
+        font-size: 30px; /* Yazı boyutu */
+        text-align: center; /* Yazıyı ortalamak için */
+        color: #333; /* Yazı rengi, isteğe göre ayarlayın */
+        margin: 0; /* Varsayılan margin’i kaldırın */
+       }
+       .Card-For-Colors{
+        width: 900px;
+        height: auto;
+        border-radius: 15px;
+        background-color: #5F6F65;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 0 auto;
+       }
+
+    .container-For-Color {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        border-radius: 15px;
+    }
+
+    .palette {
+        display: flex;
+        flex-wrap: wrap;
+        width: auto;
+        height: auto;
+        max-width: 770px;
+        background: #e8e8f3;
+        position: relative;
+        padding: 10px;
+        border-radius: 20px;
+        margin: 40px;
+        box-shadow: 7px 7px 15px rgba(55, 84, 170, 0.15), -7px -7px 20px rgba(255, 255, 255, 1), inset 0px 0px 4px rgba(255, 255, 255, 0.2), inset 7px 7px 15px rgba(55, 84, 170, 0), inset -7px -7px 20px rgba(255, 255, 255, 0), 0px 0px 4px rgba(255, 255, 255, 0) !important;
+    }
+
+    .palette-name {
+        position: absolute;
+        right: 40px;
+        bottom: 50px;
+        font-size: 25px;
+        color: #969595;
+    }
+
+    .a_palette_color {
+        width: 64px;
+        height: 64px;
+        background: red;
+        display: inline-block;
+        margin: 14px;
+        border-radius: 50%;
+        box-shadow: 7px 7px 15px rgba(55, 84, 170, 0.15), -7px -7px 20px rgba(255, 255, 255, 1), inset 0px 0px 4px rgba(255, 255, 255, 0.2), inset 7px 7px 15px rgba(55, 84, 170, 0), inset -7px -7px 20px rgba(255, 255, 255, 0), 0px 0px 4px rgba(255, 255, 255, 0) !important;
+        cursor: pointer;
+    }
+
+    .switch-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 20px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 34px;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+    input:checked + .slider {
+        background-color: #4caf50;
+    }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+    .round {
+        border-radius: 34px;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center; /* Yatayda ortalar */
+        align-items: center; /* Dikeyde ortalar */
+    }
+
+    .container {
+        display: flex;
+        gap: 5px; /* Checkbox'lar arasında 5px boşluk */
+        flex-wrap: nowrap;
+        align-items: center;
+        padding-bottom: 10px;
+    }
+
+    .checkbox-container {
+        display: flex;
+        margin: 0;
+        padding: 0;
+    }
+
+    .checkbox-btn {
+        position: relative;
+        width: 50px; /* Kutucuk genişliği */
+        height: 50px; /* Kutucuk yüksekliği */
+    }
+
+        .checkbox-btn input[type="checkbox"] {
+            opacity: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .checkbox-btn label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
+
+        .checkbox-btn input[type="checkbox"]:checked + label {
+            border-color: #4CAF50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+            background: #f8fff8;
+        }
+
+        .checkbox-btn:hover label {
+            border-color: #4CAF50;
+        }
+
+    .custom-input {
+        width: 50px;
+        border-radius: 15px;
+        padding: 5px; /* Eğer padding istersen */
+    }
+
+    .info-text {
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+</style>
+
+<h1 class="h3 mb-0 text-gray-800">Ürün ekleme paneli</h1>
+<br />
+<br />
+<div class="product-card">
+    
+
+        <form action="/ProductController1/AddProductS2" method="post" enctype="multipart/form-data">
+
+        <div class="container" style="display: flex; column-gap: 30px; flex-wrap: nowrap; align-items: center;">
+            <div>
+                <div class="form-group"><p class="info-text">Lütfen ekleyeceğiniz ürünün fotoğrafını seçiniz</p></div>
+                <div class="image-placeholder">
+                    <img id="previewImage" src="" alt="show" style="display:none;">
+                    <input type="file" id="imageUpload" name="imageUpload" accept="image/*" />
+                </div>
+            </div>
+
+            <!-- Renk paleti seçimi -->
+            <div class="container" style="display: flex; align-items: center; column-gap: 20px; flex-wrap: nowrap;">
+
+                <p class="info-text" style="margin: 0;">Ürün renklerini seçiniz:</p>
+                <div class="color-picker-container" style="display: flex;">
+                    @if (Model.T_Colors == null || !Model.T_Colors.Any())
+                    {
+                     
+                    }
+                    else
+                    {
+                        @foreach (var item in Model.T_Colors)
+                        {
+                            <div class="color-option" style="background-color: @item.TemporanyColorCode; width: 20px; height: 20px; margin-right: 10px;" data-color="@item.TemporanyColorCode"></div>
+                        }
+                    }
+
+
+                    <div id="scrollToColors" data-toggle="tooltip" title="daha fazla renk ekle" style="width: 20px; height: 20px; border-radius: 50%; color: black; display: flex; justify-content: center; align-items: center; font-size: 22px; font-weight: bold; cursor: pointer;">+</div>
+                </div>
+            </div>
+        </div>
+
+            <br />
+
+        <div class="container" style="display: flex; column-gap: 120px; flex-wrap: nowrap; align-items: center; padding-bottom: 10px;">
+
+            <div style="display: flex; align-items: center;">
+                <label class="info-text">Ürün Kodu</label>
+
+                <div class="col-sm-6 mb-3 mb-sm-0" style="margin-left: 10px;">
+                    <input type="text" name="P_Code" style="width: 200px; border-radius: 15px; padding: 5px;" placeholder="örn 2532" />
+                </div>
+            </div>
+
+            <div class="container" style="display: flex; column-gap: 5px; flex-wrap: nowrap; align-items: center;">
+                <label class="info-text">Bedenler</label>
+
+                @foreach (var item in Model.SizesVm)
+                {
+                    <div class="checkbox-container">
+                        <div class="checkbox-btn">
+                            <input type="checkbox" name="SelectedSize" value="@item.SizeName">
+                            <label>@item.SizeName</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    
+          
+             <div class="container" style="display: flex; column-gap: 20px; flex-wrap: nowrap; align-items: center; padding-bottom:10px; ">
+               
+               <label class="info-text">Ürün Adı :</label>
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                <input type="text" name="P_Name" style="width: 200px; border-radius: 15px; padding:5px;" placeholder="örn Triko" />
+                  </div>
+                 <br />
+             </div>
+
+            <div class="container" style="display: flex; column-gap: 20px; flex-wrap: nowrap; align-items: center; padding-bottom:10px;">
+              
+                <label class="info-text">Ürün Stoğu</label>
+                 <div class="col-sm-6 mb-3 mb-sm-0">
+                <input type="text" name="Stok_Quantity" style="width: 200px; border-radius: 15px; padding: 5px;" placeholder="örn 5" />
+            </div>
+
+             <label class="info-text">Açıklama</label>
+            <textarea name="Description" id="aciklama" rows="4" placeholder="Açıklama girin" style="margin-left:20px; border-radius:15px; width: 100%;"></textarea>
+
+            </div>
+
+            <div class="container" style="display: flex; column-gap: 20px; flex-wrap: nowrap; align-items: center; padding-bottom:10px;">
+               <label class="info-text">Ürün fiyatı</label>
+                   <div class ="col-sm-6 mb-3 mb-sm-0">
+                <input type="text" name="P_Price" style="width: 200px; border-radius: 15px; padding: 5px;" placeholder="örn 200" />
+                   </div>
+            </div>
+
+            <br />
+            <div class="container" style="display: flex; column-gap: 20px; flex-wrap: nowrap; align-items: center; padding-bottom:15px;">
+              <label class="info-text">Ekleme Tarihi</label>
+                <div class ="col-sm-6 mb-3 mb-sm-0">
+                <input type="date" name="Added_Date" style="width:200px; border-radius:15px;" required />
+            </div>
+            <div class="switch-container">
+                <span style="font-size:23px;">Aktiflik durumu</span>
+                <label class="switch">
+                    <input name="P_IsActive" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+               <br />
+            </div>
+            <br />
+        <div class="button-container">
+            <button class="btn btn-success" style="border-radius:20px;">     Ürün Ekle ve Kaydet     </button>
+        </div>
+    </form>
+
+    </div>
+
+
+<br />
+<br />
+<br />
+<div class="product-card"><br /><p class="more-colors"> Daha fazla renk !</p> </div>
+
+<div id="colorPaletteSection" class="container-For-Color">
+    <div class="palette">
+
+        @foreach (var item in Model.ColorsVm)
+        {
+            <form method="post" , action="/ProductController1/TemporanyColor">
+                <input type="hidden" name="TemporanyColorCode" value="@item.ColorCode" />
+                <input type="hidden" name="TemporanyColorName" value="@item.ColorName" />
+                <input type="hidden" name="TemporanyColorIsActive" value="True" />
+                <button type="submit" class="a_palette_color" style="background-color:@item.ColorCode" title="@item.ColorName"></button>
+            </form>
+        }
+
+    </div>
+</div>
+
+
+<script>
+    document.getElementById("imageUpload").addEventListener("change", function (event) {
+        var imagePlaceholder = document.getElementById("previewImage");
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            imagePlaceholder.src = e.target.result;
+            imagePlaceholder.style.display = "block"; // Görüntü elementini görünür hale getir
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    });
+    
+    // Renk seçimi işlevselliği
+    const colorOptions = document.querySelectorAll('.color-option');
+
+    colorOptions.forEach(option => {
+        option.addEventListener('click', function () {
+            // Önceki seçili rengi temizle
+            colorOptions.forEach(opt => opt.classList.remove('selected'));
+
+            // Seçilen renge "selected" sınıfını ekle
+            this.classList.add('selected');
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        var scrollButton = document.getElementById('scrollToColors');
+        var colorPaletteSection = document.getElementById('colorPaletteSection');
+
+        scrollButton.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent default action
+            colorPaletteSection.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    document.getElementById("imageUpload").addEventListener("change", function (event) {
+        const image = document.getElementById("previewImage");
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                image.src = e.target.result;
+                image.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+</script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

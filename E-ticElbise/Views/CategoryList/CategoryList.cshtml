@@ -1,0 +1,102 @@
+﻿@model List<EntityLayer.Concrate.Category>
+
+@{
+    ViewData["Title"] = "CategoryList";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Kategori Listesi</h1>
+
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #f0f0f0;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 sütunlu grid */
+        gap: 20px; /* Kartlar arasındaki boşluk */
+        justify-items: center;
+        padding: 20px;
+    }
+
+    .card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 280px; /* Kart genişliği */
+        padding: 20px;
+        margin: 10px;
+        text-align: center; /* İçeriği ortalar */
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .kategori-baslik {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .image-placeholder {
+        width: 100%;
+        height: 240px;
+        background-color: #e0e0e0;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        overflow: hidden;
+        position: relative;
+    }
+
+        .image-placeholder img {
+            object-fit: cover;
+            height: 100%;
+            border-radius: 10px;
+        }
+</style>
+
+<div class="grid-container">
+    @foreach (var item in Model)
+    {
+        <div class="card">
+            <div class="image-placeholder">
+                <img src="@Url.Content(@item.ImageUrl)" alt="@item.ImageUrl" />
+            </div>
+            <div class="content">
+                <span class="kategori-baslik">Kategori Adı: </span>
+                <label style="font-size:18px;"> @item.CategoryName</label>
+            </div>
+            <br />
+            <div class="content">
+                <span class="kategori-baslik">
+                    Aktiflik durumu : @if (item.IsActive == false)
+                    {
+                        <label style="color: red;"> Pasif</label>
+                    }
+                    else
+                    {
+                        <label style="color: green;"> Aktif </label>
+                    }
+                </span>
+            </div>
+            <div class="content">
+                <span class="kategori-baslik"> Açıklama : </span>
+                <label> @item.CategoryDiscription </label>
+            </div>
+            <a href="/CategoryList/UpdateCategory/@item.CategoryId" class="btn btn-success">Güncelle</a>
+            <br />
+            <a href="/CategoryList/DeleteCategory/@item.CategoryId" class="btn btn-danger">Sil</a>
+        </div>
+    }
+</div>
